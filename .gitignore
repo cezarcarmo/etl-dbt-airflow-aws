@@ -1,0 +1,44 @@
+# Ignore arquivos e diretórios do Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+
+# Ignore arquivos e diretórios do Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+.env/
+.venv/
+
+# Ignore arquivos de log
+logs/
+*.log
+
+# Ignore arquivos e diretórios do Docker
+docker-compose.override.yml
+.docker/
+Dockerfile
+
+# Ignore arquivos específicos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignore arquivos de configuração do IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore arquivos de configuração do Airflow
+airflow.cfg
+unittests.cfg
+webserver_config.py
