@@ -35,5 +35,27 @@ services:
         airflow webserver
       "
 
+  airflow-scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    depends_on:
+      - postgres
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./requirements.txt:/requirements.txt
+      - ./dbt_project.yml:/opt/airflow/dbt_project.yml
+      - ./dbt:/opt/dbt
+      - ./models:/opt/airflow/models
+    command: >
+      bash -c "
+        airflow scheduler
+      "
+
 volumes:
   postgres_data:

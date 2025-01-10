@@ -2,6 +2,10 @@ name: etl_project
 version: "1.0"
 profile: default
 config-version: 2
+
+model-paths: ["models"]
+
 models:
   etl_project:
     +materialized: view
+

@@ -17,7 +17,7 @@ with DAG(
     default_args=default_args,
     description='DAG para executar pipelines DBT',
     schedule_interval='@daily',  # Executar diariamente
-    start_date=datetime(2023, 1, 1),
+    start_date=datetime(2025, 1, 10),
     catchup=False,
     tags=['dbt', 'etl'],
 ) as dag:
@@ -25,14 +25,14 @@ with DAG(
     # Tarefa 1: Executar o DBT Run
     dbt_run = BashOperator(
         task_id='dbt_run',
-        bash_command='dbt run --profiles-dir /opt/dbt',
+        bash_command='dbt run --project-dir /opt/airflow --profiles-dir /opt/dbt',
         dag=dag,
     )
 
     # Tarefa 2: Executar Testes DBT
     dbt_test = BashOperator(
         task_id='dbt_test',
-        bash_command='dbt test --profiles-dir /opt/dbt',
+        bash_command='dbt test --project-dir /opt/airflow --profiles-dir /opt/dbt',
         dag=dag,
     )
 
