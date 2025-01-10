@@ -27,6 +27,7 @@ services:
       - ./requirements.txt:/requirements.txt
       - ./dbt_project.yml:/opt/airflow/dbt_project.yml
       - ./dbt:/opt/dbt
+      - ./dbt/profiles.yml:/home/airflow/.dbt/profiles.yml  # Mapeamento correto
     depends_on:
       - postgres
     command: >
@@ -52,6 +53,7 @@ services:
       - ./dbt_project.yml:/opt/airflow/dbt_project.yml
       - ./dbt:/opt/dbt
       - ./models:/opt/airflow/models
+      - ./dbt/profiles.yml:/home/airflow/.dbt/profiles.yml 
     command: >
       bash -c "
         airflow scheduler
