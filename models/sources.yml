@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: public  # Nome do schema no PostgreSQL
+    database: airflow  # Nome do banco de dados
+    schema: public  # Nome do schema (geralmente "public")
+    tables:
+      - name: bank_transactions  # Nome da tabela no banco

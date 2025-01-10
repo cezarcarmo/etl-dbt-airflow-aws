@@ -40,13 +40,13 @@ with DAG(
     # Tarefa 2: Executar o DBT Run
     dbt_run = BashOperator(
         task_id='dbt_run',
-        bash_command='dbt run --project-dir /opt/airflow --profiles-dir /opt/dbt',
+        bash_command='dbt run --project-dir /opt/airflow --profiles-dir /home/airflow/.dbt --profile airflow_postgres',
     )
 
     # Tarefa 3: Executar Testes DBT
     dbt_test = BashOperator(
         task_id='dbt_test',
-        bash_command='dbt test --project-dir /opt/airflow --profiles-dir /opt/dbt',
+        bash_command='dbt test --project-dir /opt/airflow --profiles-dir /home/airflow/.dbt --profile airflow_postgres',
     )
 
     # Ordem de execução das tarefas
