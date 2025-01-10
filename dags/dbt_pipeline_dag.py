@@ -1,6 +1,8 @@
 from airflow import DAG
 from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
+
 
 # Configuração básica do DAG
 default_args = {
@@ -12,6 +14,13 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
+# Função para gerar dados fictícios e salvar no PostgreSQL
+def generate_fake_data_to_db():
+    from scripts.generate_bank_transactions import generate_fake_data_to_db
+    generate_fake_data_to_db()
+
+
+# Criação do DAG
 with DAG(
     dag_id='dbt_pipeline',
     default_args=default_args,
@@ -22,19 +31,23 @@ with DAG(
     tags=['dbt', 'etl'],
 ) as dag:
 
-    # Tarefa 1: Executar o DBT Run
+    # Tarefa 1: Gerar Dados Fictícios no Banco de Dados
+    generate_data_task = PythonOperator(
+        task_id='generate_fake_data_to_db',
+        python_callable=generate_fake_data_to_db,
+    )
+
+    # Tarefa 2: Executar o DBT Run
     dbt_run = BashOperator(
         task_id='dbt_run',
         bash_command='dbt run --project-dir /opt/airflow --profiles-dir /opt/dbt',
-        dag=dag,
     )
 
-    # Tarefa 2: Executar Testes DBT
+    # Tarefa 3: Executar Testes DBT
     dbt_test = BashOperator(
         task_id='dbt_test',
         bash_command='dbt test --project-dir /opt/airflow --profiles-dir /opt/dbt',
-        dag=dag,
     )
 
     # Ordem de execução das tarefas
-    dbt_run >> dbt_test
+    generate_data_task >> dbt_run >> dbt_test

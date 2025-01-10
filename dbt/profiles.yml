@@ -1,12 +1,12 @@
-default:
-  target: dev
+airflow_postgres:  # Nome do perfil DBT
+  target: dev      # Ambiente de destino
   outputs:
-    dev:
+    dev:           # Configuração do ambiente "dev"
       type: postgres
-      host: postgres
-      user: airflow
-      password: airflow
-      port: 5432
-      dbname: airflow
-      schema: public
-      threads: 4
+      host: postgres        # Nome do serviço PostgreSQL no docker-compose.yml
+      user: airflow         # Usuário do banco de dados (definido no docker-compose.yml)
+      password: airflow     # Senha do banco de dados (definido no docker-compose.yml)
+      dbname: airflow       # Nome do banco de dados
+      schema: public        # Schema usado no PostgreSQL
+      port: 5432            # Porta padrão do PostgreSQL
+      threads: 4            # Número de threads para paralelismo no DBT
