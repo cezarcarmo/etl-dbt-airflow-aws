@@ -25,6 +25,8 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
+      - ./dbt_project.yml:/opt/airflow/dbt_project.yml
+      - ./dbt:/opt/dbt
     depends_on:
       - postgres
     command: >
