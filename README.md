@@ -1,5 +1,7 @@
 # ETL com DBT, Airflow, AWS S3, e AWS Glue
 
+![Diagrama do Pipeline](arquitetura.png)
+
 ## Visão Geral do Projeto
 
 Este projeto demonstra um pipeline ETL utilizando DBT (Data Build Tool), Airflow, e serviços da AWS como S3, Glue e Athena. O objetivo é extrair dados de uma base PostgreSQL, processá-los com DBT, armazená-los no S3 no formato Parquet e criar um catálogo dos dados no AWS Glue para posterior consulta no Athena.
