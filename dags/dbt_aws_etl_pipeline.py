@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
-from airflow.providers.amazon.aws.operators.glue import AwsGlueJobOperator
+from airflow.providers.amazon.aws.operators.glue_crawler import GlueCrawlerOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from datetime import datetime, timedelta
 import pandas as pd
@@ -26,7 +26,7 @@ def export_to_s3():
     cursor = connection.cursor()
 
     # Extrair dados refinados
-    cursor.execute("SELECT * FROM public.refined_transactions;")
+    cursor.execute("SELECT * FROM public.refined_transations;")  # Corrigido o nome da tabela
     rows = cursor.fetchall()
     columns = [desc[0] for desc in cursor.description]
     df = pd.DataFrame(rows, columns=columns)
@@ -50,11 +50,11 @@ def export_to_s3():
 with DAG(
     dag_id='dbt_aws_etl_pipeline',
     default_args=default_args,
-    description='Pipeline ETL com DBT, S3 e Athena',
+    description='Pipeline ETL com DBT, S3 e Glue Crawler',
     schedule_interval='@daily',
     start_date=datetime(2025, 1, 1),
     catchup=False,
-    tags=['dbt', 'aws', 'athena'],
+    tags=['dbt', 'aws', 'glue'],
 ) as dag:
 
     # Tarefa 1: Executar os modelos DBT
@@ -70,12 +70,11 @@ with DAG(
     )
 
     # Tarefa 3: Executar o Glue Crawler para mapear os dados no Glue Catalog
-    glue_crawler_task = AwsGlueJobOperator(
+    glue_crawler_task = GlueCrawlerOperator(
         task_id='glue_crawler',
-        job_name='etl_dbt_crawler',  # Nome do crawler criado no Glue
+        config={"Name": "etl_dbt_crawler"},  # Nome do crawler criado no Glue
         aws_conn_id='aws_default',
-        script_location=None,  # Não é necessário para crawlers
-        create_job_kwargs={},
+        wait_for_completion=True,  # Esperar a conclusão do crawler
     )
 
     # Ordem das tarefas no pipeline
