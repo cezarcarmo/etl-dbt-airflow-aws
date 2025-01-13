@@ -26,9 +26,9 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
-      - ./dbt_project.yml:/opt/airflow/dbt_project.yml
+      - ./dbt/dbt_project.yml:/opt/airflow/dbt_project.yml
       - ./dbt:/opt/dbt
-      - ./models:/opt/airflow/models
+      - ./dbt/models:/opt/airflow/models
       - ./dbt/profiles.yml:/home/airflow/.dbt/profiles.yml
       - ./scripts:/opt/airflow/scripts
     depends_on:
@@ -54,9 +54,9 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
-      - ./dbt_project.yml:/opt/airflow/dbt_project.yml
+      - ./dbt/dbt_project.yml:/opt/airflow/dbt_project.yml
       - ./dbt:/opt/dbt
-      - ./models:/opt/airflow/models
+      - ./dbt/models:/opt/airflow/models
       - ./dbt/profiles.yml:/home/airflow/.dbt/profiles.yml
       - ./scripts:/opt/airflow/scripts
     command: >
