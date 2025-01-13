@@ -203,3 +203,13 @@ Criamos o bucket etl-dbt-athena-data para armazenar os arquivos Parquet.
 ## Etapa 8: Configuração do IAM
 
 * Atualizamos as permissões da IAM Role associada ao Glue Crawler para incluir a ação s3:GetObject no bucket etl-dbt-athena-data.
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
+
+## Responsável Técnico
+
+Projeto mantido por **Cézar Augusto Meira Carmo.** 
+
+Para mais informações: **dataengineercezar@egmail.com**
